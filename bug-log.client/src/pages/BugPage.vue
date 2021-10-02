@@ -5,6 +5,12 @@
         <BugDetails />
       </div>
     </div>
+
+     <div class="row justify-content-center my-4 mx-2">
+       <div class="col-6">
+    <NoteForm />
+       </div>
+  </div>
   </div>
 </template>
 
@@ -14,19 +20,23 @@ import { AppState } from '../AppState'
 import Pop from '../utils/Pop'
 import { bugsService } from '../services/BugsService'
 import { useRoute } from 'vue-router'
+import { notesService } from '../services/NotesService'
+import { logger } from '../utils/Logger'
 
 export default {
 setup(){
   const route = useRoute()
-  onMounted(() => {
+  onMounted(async () => {
       try {
-       bugsService.getBugById(route.params.id)
+       await bugsService.getBugById(route.params.id)
+       await notesService.getNotes(route.params.id)
       } catch (error) {
         Pop.toast(error.message, 'error')
       }
     })
   return{
-    bugs: computed(()=> AppState.bugs)
+    bugs: computed(()=> AppState.bugs),
+    // note: computed(() => AppState.notes)
   }
 }
 }

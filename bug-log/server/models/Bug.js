@@ -6,7 +6,7 @@ export const BugSchema = new Schema( {
   title: {type: String, required: true},
   description: {type: String, required: true},
   creatorId: { type: Schema.Types.ObjectId, ref: 'Account', required: true },
-  priority: {type: Number, enum: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,], required: true},
+  priority: {type: Number, enum: [1, 2, 3, 4, 5], required: true},
   updatedAt: { type: Date},
   // creator: { type: } TODO  ask for clarification on $creator: Account on UML...
 },
