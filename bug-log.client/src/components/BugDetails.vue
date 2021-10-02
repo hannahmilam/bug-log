@@ -1,5 +1,5 @@
 <template>
-  <div class="card" >
+  <div class="card">
     <div class="card-header row justify-content-between">
       <div class="col-2" v-if="bug">
         <!-- <img :src="bug.creator.picture" height="64" class="rounded-circle" alt=""> -->
@@ -36,11 +36,17 @@
       <div class="col-8">
       <p>{{bug.description}}</p>
       </div>
-      <div class="col-2">
-        <button class="btn btn-primary">
-         <i class="mdi mdi-bug"></i>
-          Track Bug</button>
-      </div>
+      
+      <!-- <div class="col-2">
+           <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="closed">
+            <label class="form-check-label" for="closed">
+            <p v-if="tracked"><i class="mdi mdi-bug"></i> Don't Track Bug</p>
+            <p v-else><i class="mdi mdi-bug"></i> Track Bug</p>
+            </label>
+            </div>
+      </div>  -->
+
       <!-- <div class="col-2" v-if="b in trackedBug" :key="b.id" :trackedBug="b">
         <img :src="trackedBug.creator.picture" height="30px" class="rounded-circle" alt="">
       </div> -->
@@ -57,7 +63,8 @@ export default {
   
 setup(){
 return{
-  bug: computed(()=> AppState.bug)
+  bug: computed(()=> AppState.bug),
+  account: computed((()=> AppState.account))
 }
 }
 

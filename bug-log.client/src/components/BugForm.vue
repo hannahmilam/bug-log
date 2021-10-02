@@ -1,5 +1,5 @@
 <template>
- <form @submit.prevent="reportBug">
+ <form @submit.prevent="reportBug(bug.id)">
   
     <div class="form-group">
       <label for="title" class="sr-only"></label>
@@ -52,6 +52,7 @@ import { bugsService } from '../services/BugsService'
 import { logger } from '../utils/Logger'
 import { useRoute } from 'vue-router'
 import { Bug } from '../model/Bug'
+import { router } from '../router'
 
  export default {
    props: {
@@ -67,10 +68,11 @@ import { Bug } from '../model/Bug'
       })
       return {
         editable,
-        async reportBug(){
+        async reportBug(bugId){
           try {
-            await bugsService.reportBug(editable.value)
-            // router.push({ name: 'BugDetails', params: { id: newBug}})
+            const newBug = await bugsService.reportBug(editable.value)
+            logger.log('buglog', bugId)
+            router.push({ name: 'BugDetail', params: { bugId }})
             editable.value = {}
             }
            catch (error) {

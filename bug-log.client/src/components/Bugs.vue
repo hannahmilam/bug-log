@@ -45,13 +45,19 @@
 </template>
 
 <script>
+import { computed } from '@vue/runtime-core'
 import { Bug } from '../model/Bug'
+import { AppState } from '../AppState'
+import Pop from '../utils/Pop'
+import { bugsService } from '../services/BugsService'
 export default {
   props: {
     bug: {type: Bug, required: true}
   },
 setup(props){
-
+return{
+  account: computed(()=> AppState.account),
+}
 }
 
 }

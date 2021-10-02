@@ -9,20 +9,16 @@
         />
       </div>
       <div class="mt-2">
-        <h4>Bug Log</h4>
+        <h4>BUG LOG</h4>
         </div>
     </router-link>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarText"
-      aria-controls="navbarText"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon" />
-    </button>
+  
+      <router-link :to="{name:'Account'}">
+          <li class="nav-link text-white">
+            My Tracked Bugs
+          </li>
+        </router-link>
+
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
         

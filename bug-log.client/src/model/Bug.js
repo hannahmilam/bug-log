@@ -6,7 +6,7 @@ export class Bug {
     this.description = bugData.description
     this.priority = bugData.priority
     this.updatedAt = bugData.updatedAt
-    this.creator = bugData.creator 
+    this.creator = bugData.creator
     this.creatorId = bugData.creatorId
   }
 }
