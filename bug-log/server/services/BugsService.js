@@ -16,6 +16,9 @@ class BugsService{
   }
   async createNewBug(body) {
     const bug = await dbContext.Bug.create(body)
+    // if(bug.priority !== bug.priority){
+    //   throw new BadRequest('invalid priority')
+    // }
     await bug .populate('creator', 'name picture')
     return bug 
   }
@@ -46,16 +49,17 @@ class BugsService{
     return bug
   }
 
-  async getUsersTrackingBug(accountId){
-    const user = await dbContext.TrackedBug.findById(accountId).populate('tracker', 'name picture')
-    if(!user) {
+  async getUsersbyTrackingBugId(id){
+    const users = await dbContext.TrackedBug.find({ bugId: id }).populate('tracker', 'name picture')
+    // await dbContext.TrackedBug.find({ trackedBugId: id}).populate('tracker', 'name picture')
+    if(!users) {
       throw new BadRequest('Invalid Bug Id')
     }
-    return user
+    return users
   }
   
   async getMyTrackedBugs(accountId) {
-    const myTrackedBugs = await dbContext.TrackedBug.find({accountId: accountId}).sort('-bug').populate('tracker', 'creator name')
+    const myTrackedBugs = await dbContext.TrackedBug.find({ accountId: accountId}).sort('-tracked').populate('bug')
     return myTrackedBugs
   }
 
@@ -65,19 +69,17 @@ class BugsService{
     await trackedBug.populate('bug')
     return trackedBug
   }
-  async deleteTrackedBug(trackedBugId, id) {
-      const trackedBug = await this.getBugById(id)
-      if(id !== trackedBug.creatorId.toString()) {
+  async deleteTrackedBug(id, userId) {
+      const bug = await this.getBugById(id)
+      if(userId !== bug.creatorId.toString()) {
         throw new Forbidden('Not Authorized')
       }
-      await trackedBug.remove()
-      return trackedBug
+      await bug.remove()
+      return bug
     }
 
     async getNotesByBugId(bugId) {
       const notes = await dbContext.Note.find({ bugId: bugId }).populate('creator', 'name picture')
-      // const notes = await dbContext.Note.find({ query, bugId }).populate('creator', 'name picture')
-      // const notes = await dbContext.Note.findById(bugId).populate('creator', 'name picture')
       return notes
     }
   }
