@@ -49,6 +49,7 @@ import { computed, ref, watchEffect } from '@vue/runtime-core'
 import Pop from '../utils/Pop'
 import { AppState } from '../AppState'
 import { bugsService } from '../services/BugsService'
+import { logger } from '../utils/Logger'
 
  export default {
     setup() {
@@ -58,15 +59,17 @@ import { bugsService } from '../services/BugsService'
       })
       return {
         bug: computed(() => AppState.bugs),
+        account: computed(() => AppState.account),
         editable,
         async reportBug(){
           try {
             const newBug = await bugsService.reportBug(editable.value)
-            router.push({ name: 'BugDetail', params: { id: newBug}})
+            router.push({ name: 'BugDetails', params: { id: newBug}})
             editable.value = {}
             }
            catch (error) {
             Pop.toast(error.message, 'error')
+            logger.log('report bug', error)
           }
           
         }

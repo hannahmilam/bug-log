@@ -14,21 +14,28 @@
           <div class="col-2">
             <h4> Title </h4>
           </div>
+
           <div class="col-2">
-            <h4 class="selectable" @click="togglePriority"> Priority </h4>
+            <h4> Priority </h4>
+            <button class="btn selectable me-2 text-white" @click="toggleAscending">
+            <i class="mdi" :class="ascending ? 'mdi-arrow-up' : 'mdi-arrow-down'"></i>
+            </button> 
           </div>
+
           <div class="col-2">
              <h4> Reported By </h4>
           </div>
           <div class="col-2">
             <h4> Last Updated </h4>
           </div>
+
           <div class="col-2">
-            <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="closed" checked @click="toggleOpenedFilter">
-            <label class="form-check-label" for="closed"> All Bugs
-              <!-- <span v-if="checked">Open Only</span>
-              <span v-else>All Bugs</span> -->
+            <h4>Status</h4>
+            <div class="form-check form-switch" @click="closedFilter = !closedFilter">
+            <input class="form-check-input" type="checkbox" id="closed">
+            <label class="form-check-label" for="closed">
+            <p v-if="closedFilter">Open Only</p>
+            <p v-else>All Bugs</p>
             </label>
             </div>
           </div>
@@ -47,8 +54,7 @@
        Report Bug
       </template>
       <template #modal-body>
-        <!-- FIXME errors with report bug form... can't figure out why -->
-        <!-- <ReportBugForm /> -->
+        <BugForm />
       </template>
 </Modal>
 </template>
@@ -60,8 +66,25 @@ import Pop from '../utils/Pop'
 import { bugsService } from '../services/BugsService'
 
 export default {
+  name: 'Home',
 setup(){
-  onMounted(async () => {
+  const ascending = ref(true)
+  const closedFilter = ref(false)
+
+  function closedFilterFunction(bug) {
+      if (closedFilter.value) {
+        return bug.closed === false
+      }
+      return true
+    }
+    function prioritySorter(a, b) {
+      if (ascending.value) {
+        return b.priority - a.priority
+      }
+      return a.priority - b.priority
+    }
+
+  onMounted( async () => {
       try {
        await bugsService.getBugs()
       } catch (error) {
@@ -69,7 +92,15 @@ setup(){
       }
     })
   return{
+    account: computed(() => AppState.account),
     bugs: computed(()=> AppState.bugs),
+    ascending,
+    closedFilter,
+
+    bugs: computed(() => AppState.bugs.filter(closedFilterFunction).sort(prioritySorter)),
+      toggleAscending() {
+      ascending.value = !ascending.value
+      }
   }
 }
 }
