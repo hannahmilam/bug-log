@@ -47,7 +47,6 @@
        </div>
      </div>
    </div>
- </div> 
 
 <Modal id="report-bug-modal">
    <template #modal-title>
@@ -57,6 +56,7 @@
         <BugForm />
       </template>
 </Modal>
+ </div> 
 </template>
 
 <script>
@@ -66,7 +66,6 @@ import Pop from '../utils/Pop'
 import { bugsService } from '../services/BugsService'
 
 export default {
-  name: 'Home',
 setup(){
   const ascending = ref(true)
   const closedFilter = ref(false)
@@ -84,19 +83,14 @@ setup(){
       return a.priority - b.priority
     }
 
-  onMounted( async () => {
-      try {
-       await bugsService.getBugs()
-      } catch (error) {
-        Pop.toast(error.message, 'error')
-      }
+  onMounted( () => {
+     bugsService.getBugs()
     })
+    
   return{
     account: computed(() => AppState.account),
-    bugs: computed(()=> AppState.bugs),
     ascending,
     closedFilter,
-
     bugs: computed(() => AppState.bugs.filter(closedFilterFunction).sort(prioritySorter)),
       toggleAscending() {
       ascending.value = !ascending.value

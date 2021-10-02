@@ -14,7 +14,7 @@ class BugsService{
     AppState.bug = new Bug(res.data)
   }
   async reportBug(bug){
-    const res = await api.post('api/bugs' + bug)
+    const res = await api.post('api/bugs', bug)
     AppState.bugs.push(new Bug(res.data))
   }
 }

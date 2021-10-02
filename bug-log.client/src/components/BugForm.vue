@@ -50,21 +50,27 @@ import Pop from '../utils/Pop'
 import { AppState } from '../AppState'
 import { bugsService } from '../services/BugsService'
 import { logger } from '../utils/Logger'
+import { useRoute } from 'vue-router'
+import { Bug } from '../model/Bug'
 
  export default {
-    setup() {
+   props: {
+     bug: {
+       type: Bug, default: () => new Bug() 
+     }
+   },
+    setup(props) {
       const editable = ref({})
+      const route = useRoute()
       watchEffect(() => {
-        editable.value = {}
+        editable.value = {...props.bug}
       })
       return {
-        bug: computed(() => AppState.bugs),
-        account: computed(() => AppState.account),
         editable,
         async reportBug(){
           try {
-            const newBug = await bugsService.reportBug(editable.value)
-            router.push({ name: 'BugDetails', params: { id: newBug}})
+            await bugsService.reportBug(editable.value)
+            // router.push({ name: 'BugDetails', params: { id: newBug}})
             editable.value = {}
             }
            catch (error) {
