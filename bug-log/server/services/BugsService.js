@@ -49,6 +49,7 @@ class BugsService{
     return bug
   }
 
+
   async getUsersbyTrackingBugId(id){
     const users = await dbContext.TrackedBug.find({ bugId: id }).populate('tracker', 'name picture')
     // await dbContext.TrackedBug.find({ trackedBugId: id}).populate('tracker', 'name picture')
@@ -62,6 +63,13 @@ class BugsService{
     const myTrackedBugs = await dbContext.TrackedBug.find({ accountId: accountId}).sort('-tracked').populate('bug')
     return myTrackedBugs
   }
+  async getTrackedBugById(id) {
+    const bug = await dbContext.TrackedBug.findById(id).populate('tracker', 'name picture')
+    if(!bug) {
+      throw new BadRequest('Invalid Bug Id')
+    }
+    return bug
+  }
 
   async addTrackedBug(bugData) {
     const trackedBug = await dbContext.TrackedBug.create(bugData)
@@ -70,7 +78,7 @@ class BugsService{
     return trackedBug
   }
   async deleteTrackedBug(id, userId) {
-      const bug = await this.getBugById(id)
+      const bug = await this.getTrackedBugById(id)
       if(userId !== bug.creatorId.toString()) {
         throw new Forbidden('Not Authorized')
       }

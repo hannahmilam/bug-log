@@ -17,9 +17,9 @@ class NotesService{
     await note.populate('creator', 'name picture')
     return note
   }
-    async deleteNote(noteId, id) {
-    const note = await this.getNoteById(noteId)
-    if(id !== note.creatorId.toString()) {
+    async deleteNote(id, userId) {
+    const note = await this.getNoteById(id)
+    if(userId !== note.creatorId.toString()) {
       throw new Forbidden('Not Authorized')
     }
     await note.remove()

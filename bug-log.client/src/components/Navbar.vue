@@ -1,13 +1,16 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
+  <nav class="navbar custom-nav navbar-expand-lg navbar-dark bg-dark px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
         <img
           alt="logo"
-          src="../assets/img/cw-logo.png"
+          src="../assets/img/buglogo.png"
           height="45"
         />
       </div>
+      <div class="mt-2">
+        <h4>Bug Log</h4>
+        </div>
     </router-link>
     <button
       class="navbar-toggler"
@@ -22,15 +25,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto">
-        <li>
-          <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
-            About
-          </router-link>
-        </li>
+        
       </ul>
       <span class="navbar-text">
         <button
-          class="btn selectable text-success lighten-30 text-uppercase my-2 my-lg-0"
+          class="btn selectable text-uppercase my-2 my-lg-0"
           @click="login"
           v-if="!user.isAuthenticated"
         >
@@ -50,7 +49,7 @@
               height="40"
               class="rounded"
             />
-            <span class="mx-3 text-success lighten-30">{{ user.name }}</span>
+            <span class="mx-3 text-white">{{ user.name }}</span>
           </div>
           <div
             class="dropdown-menu p-0 list-group w-100"
@@ -114,8 +113,11 @@ a:hover {
   text-transform: uppercase;
 }
 .navbar-nav .router-link-exact-active{
-  border-bottom: 2px solid var(--bs-success);
+  border-bottom: 2px solid black;
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
+}
+.custom-nav{
+    background: linear-gradient(35deg, #000000, #0ae4fe);
 }
 </style>
