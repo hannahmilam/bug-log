@@ -79,7 +79,7 @@ class BugsService{
   }
   async deleteTrackedBug(id, userId) {
       const bug = await this.getTrackedBugById(id)
-      if(userId !== bug.creatorId.toString()) {
+      if(userId !== bug.accountId.toString()) {
         throw new Forbidden('Not Authorized')
       }
       await bug.remove()
