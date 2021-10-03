@@ -1,5 +1,6 @@
 import { dbContext } from "../db/DbContext"
 import { BadRequest, Forbidden } from "../utils/Errors"
+import {logger } from '../utils/Logger'
 
 class BugsService{
 
@@ -58,6 +59,11 @@ class BugsService{
     }
     return users
   }
+
+  async getTrackedBugsByUser(userId) {
+    const trackedBug = await dbContext.TrackedBug.find({accountId: userId}).populate('bug').populate('tracker', 'picture name')
+    return trackedBug
+  }
   
   async getMyTrackedBugs(accountId) {
     const myTrackedBugs = await dbContext.TrackedBug.find({ accountId: accountId}).sort('-tracked').populate('bug')
@@ -70,8 +76,14 @@ class BugsService{
     }
     return bug
   }
-
-  async addTrackedBug(bugData) {
+ 
+  // STILL WORKING ON THIS ADD TRACKED BUG TO PASS THE FINAL POSTMAN REQUIREMENT...
+  async addTrackedBug(accountId, bugData) {
+    const tracked = await this.getMyTrackedBugs(accountId)
+    logger.log('userIds for tracked bug', tracked)
+    if (tracked.includes(accountId)) {
+      throw new BadRequest("You can't follow this twice")
+    }
     const trackedBug = await dbContext.TrackedBug.create(bugData)
     await trackedBug.populate('tracker', 'name picture')
     await trackedBug.populate('bug')

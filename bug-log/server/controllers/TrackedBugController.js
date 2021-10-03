@@ -13,12 +13,13 @@ export class TrackedBugController extends BaseController{
   async addTrackedBug(req, res, next) {
     try {
       req.body.accountId = req.userInfo.id
-      const trackedBug = await bugsService.addTrackedBug(req.body)
+      const trackedBug = await bugsService.addTrackedBug(req.userInfo.id, req.body)
       res.send(trackedBug)
     } catch (error) {
       next(error)
     }
   }
+  
   async deleteTrackedBug(req, res, next) {
     try {
       const bug = await bugsService.deleteTrackedBug(req.params.id, req.userInfo.id)
