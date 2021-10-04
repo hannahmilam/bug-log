@@ -1,5 +1,12 @@
 <template>
   <div class="card">
+    <div class="row">
+      <div class="col-1 offset-10" v-if="account.id == bug.creatorId">
+        <button class="btn create-button text-black pb-3" data-bs-toggle="modal" data-bs-target="#update-bug">
+            <i class="mdi mdi-pencil f-10 selectable"></i>
+            </button>
+      </div>
+    </div>
     <div class="card-header row justify-content-between">
       <div class="col-2" v-if="bug">
         <!-- <img :src="bug.creator.picture" height="64" class="rounded-circle" alt=""> -->
@@ -53,6 +60,14 @@
     </div>
   </div>
 
+  <Modal id="update-bug">
+    <template #modal-title>
+      Edit Bug Information
+    </template>
+    <template #modal-body>
+      <BugForm :bug="bug" />
+    </template>
+  </Modal>
 </template>
 
 <script>

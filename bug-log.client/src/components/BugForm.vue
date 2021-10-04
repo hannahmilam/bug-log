@@ -47,11 +47,10 @@
 <script>
 import { computed, ref, watchEffect } from '@vue/runtime-core'
 import Pop from '../utils/Pop'
-import { AppState } from '../AppState'
 import { bugsService } from '../services/BugsService'
 import { logger } from '../utils/Logger'
-import { useRoute } from 'vue-router'
 import { Bug } from '../model/Bug'
+import { AppState } from '../AppState'
 import { router } from '../router'
 
  export default {
@@ -62,7 +61,6 @@ import { router } from '../router'
    },
     setup(props) {
       const editable = ref({})
-      const route = useRoute()
       watchEffect(() => {
         editable.value = {...props.bug}
       })
@@ -70,18 +68,21 @@ import { router } from '../router'
         editable,
         async reportBug(bugId){
           try {
-            const newBug = await bugsService.reportBug(editable.value)
-            logger.log('buglog', bugId)
-            router.push({ name: 'BugDetail', params: { bugId }})
+           console.log('report bug bugId', bugId)
+            if(editable.value.id){
+              await bugsService.editBug(editable.value)
+            } else {
+            await bugsService.reportBug(editable.value)
+            router.push({ name: 'BugDetail', params: { id: bugId }})
             editable.value = {}
             }
+          }
            catch (error) {
             Pop.toast(error.message, 'error')
             logger.log('report bug', error)
           }
-          
+          }  
         }
-      }
     }
   }
   </script>

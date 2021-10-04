@@ -17,9 +17,6 @@ class BugsService{
   }
   async createNewBug(body) {
     const bug = await dbContext.Bug.create(body)
-    // if(bug.priority !== bug.priority){
-    //   throw new BadRequest('invalid priority')
-    // }
     await bug .populate('creator', 'name picture')
     return bug 
   }
@@ -78,11 +75,10 @@ class BugsService{
   }
  
   // STILL WORKING ON THIS ADD TRACKED BUG TO PASS THE FINAL POSTMAN REQUIREMENT...
-  async addTrackedBug(accountId, bugData) {
-    const tracked = await this.getMyTrackedBugs(accountId)
-    logger.log('userIds for tracked bug', tracked)
-    if (tracked.includes(accountId)) {
-      throw new BadRequest("You can't follow this twice")
+  async addTrackedBug(userId, bugData) {
+    let users = await this.getUsersbyTrackingBugId(bugData.bugId)
+    if (users.filter(u => u.accountId === userId).length > 0) {
+      throw new BadRequest("Unable To Track Bug Twice")
     }
     const trackedBug = await dbContext.TrackedBug.create(bugData)
     await trackedBug.populate('tracker', 'name picture')

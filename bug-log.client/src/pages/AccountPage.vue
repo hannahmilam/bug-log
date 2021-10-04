@@ -40,9 +40,8 @@
             </div>
           </div>
         </div>
-
         
-          <!-- <Bugs v-for="b in bugs" :key="b.id" :bug="b" /> -->
+          <Bugs v-for="b in bugs" :key="b.id" :bug="b" />
 
        </div>
      </div>
@@ -53,7 +52,6 @@
 <script>
 import { computed, onMounted, ref } from '@vue/runtime-core'
 import { AppState } from '../AppState'
-import Pop from '../utils/Pop'
 import { bugsService } from '../services/BugsService'
 
 export default {
@@ -74,20 +72,20 @@ setup(){
       return a.priority - b.priority
     }
 
-  onMounted( () => {
-     bugsService.getBugs()
+  onMounted( async () => {
+     await bugsService.getTrackedBugByAccount()
     })
     
   return{
     account: computed(() => AppState.account),
     ascending,
     closedFilter,
-    bugs: computed(() => AppState.bugs.filter(closedFilterFunction).sort(prioritySorter)),
+    bugs: computed(() => AppState.trackedBugs.filter(closedFilterFunction).sort(prioritySorter)),
       toggleAscending() {
-      ascending.value = !ascending.value
+        ascending.value = !ascending.value
+      }
       }
   }
-}
 }
 </script>
 
