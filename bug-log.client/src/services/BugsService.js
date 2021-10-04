@@ -39,11 +39,15 @@ class BugsService{
   }
 
   async trackBug(bugId){
+    if(AppState.trackedBugs.tracked){
+      return
+    } else {
     const trackedBug = {}
     trackedBug.bugId = bugId
     const res = await api.post('api/trackedbugs', trackedBug)
     AppState.trackedBugs.push(res.data)
   }
+}
 
   async deleteTrackedBug(bugId) {
   const trackedBug = {}
@@ -55,7 +59,7 @@ class BugsService{
   async getTrackedBugByAccount(query = ''){
     logger.log('tracked bugs', AppState.trackedBugs)
     const res = await api.get('account/trackedbugs' + query)
-    AppState.trackBugs = res.data
+    AppState.trackedBugs = res.data
   }
   async deleteTrackedBug(trackedBugId){
     const res = await api.delete(`api/trackedbugs/${trackedBugId}`)

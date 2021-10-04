@@ -1,12 +1,5 @@
 <template>
 <div class="container-fluid" v-if="account">
-   <div class="row my-3">
-     <div class="col-2 offset-10">
-      <button class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#report-bug-modal">
-        Report Bug
-        </button>
-     </div>
-   </div>
    <div class="row justify-content-center mt-4">
      <div class="col-10">
        <div class="card p-3">
@@ -17,31 +10,18 @@
 
           <div class="col-2">
             <h4> Priority </h4>
-            <button class="btn selectable me-2 text-white" @click="toggleAscending">
-            <i class="mdi" :class="ascending ? 'mdi-arrow-up' : 'mdi-arrow-down'"></i>
-            </button> 
           </div>
 
           <div class="col-2">
-             <h4> Reported By </h4>
-          </div>
-          <div class="col-2">
-            <h4> Last Updated </h4>
+            <h4> Updated</h4>
           </div>
 
           <div class="col-2">
             <h4>Status</h4>
-            <div class="form-check form-switch" @click="closedFilter = !closedFilter">
-            <input class="form-check-input" type="checkbox" id="closed">
-            <label class="form-check-label" for="closed">
-            <p v-if="closedFilter">Open Only</p>
-            <p v-else>All Bugs</p>
-            </label>
-            </div>
           </div>
         </div>
         
-          <Bugs v-for="b in bugs" :key="b.id" :bug="b" />
+          <TrackedBugs v-for="b in trackedBugs" :key="b.id" :bug="b.bug" />
 
        </div>
      </div>
@@ -57,37 +37,15 @@ import { logger } from '../utils/Logger'
 
 export default {
 setup(){
-  const ascending = ref(true)
-  const closedFilter = ref(false)
-  const account = computed(()=> AppState.account)
-
-  function closedFilterFunction(bug) {
-      if (closedFilter.value) {
-        return bug.closed === false
-      }
-      return true
-    }
-    function prioritySorter(a, b) {
-      if (ascending.value) {
-        return b.priority - a.priority
-      }
-      return a.priority - b.priority
-    }
 
   onMounted( async () => {
      await bugsService.getTrackedBugByAccount()
-     logger.log(AppState.trackedBugs)
     })
     
   return{
-    account: computed(() => AppState.account),
+    account: computed(()=> AppState.account),
     trackedBugs: computed(()=> AppState.trackedBugs),
-    ascending,
-    closedFilter,
-    bugs: computed(() => AppState.trackedBugs.filter(closedFilterFunction).sort(prioritySorter)),
-      toggleAscending() {
-        ascending.value = !ascending.value
-      }
+    bugs: computed(() => AppState.bugs),
       }
   }
 }

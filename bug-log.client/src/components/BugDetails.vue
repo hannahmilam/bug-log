@@ -2,7 +2,7 @@
   <div class="card">
     <div class="row" v-if="account.id == bug.creatorId">
       <div class="col-1 offset-8">
-        <button class="btn create-button text-black pb-3" data-bs-toggle="modal" data-bs-target="#update-bug">
+        <button class="btn create-button text-black pb-3" data-bs-toggle="modal" data-bs-target="#update-bug" v-if="bug.closed === false">
             <i class="mdi mdi-pencil f-10 selectable" title="edit bug"></i>
             </button>
             </div>
@@ -65,19 +65,19 @@
            <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="closed" @click="trackBug">
             <label class="form-check-label" for="closed">
-            <p v-if="trackedBug"><i class="mdi mdi-bug"></i> Don't Track Bug</p>
+            <p v-if="trackedBug.tracked"><i class="mdi mdi-bug"></i> Don't Track Bug</p>
             <p v-else><i class="mdi mdi-bug"></i> Track Bug</p>
             </label>
             </div>
       </div> 
 
-       <div class="col-3" v-for="t in trackedBug" :key="t.id" :trackedBug="t">
+      <!-- NOT WORKING... NEED TO FIXME -->
+       <!-- <div class="col-3">
         <img :src="trackedBug.tracker?.picture" height="30px" class="rounded-circle" alt="">
         <p>{{trackedBug.tracker?.name}}</p>
-        {{trackedBug}}
-      </div>
+      </div>-->
     </div>
-  </div>
+  </div> 
 
   <Modal id="update-bug">
     <template #modal-title>
