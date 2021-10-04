@@ -53,11 +53,13 @@
 import { computed, onMounted, ref } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { bugsService } from '../services/BugsService'
+import { logger } from '../utils/Logger'
 
 export default {
 setup(){
   const ascending = ref(true)
   const closedFilter = ref(false)
+  const account = computed(()=> AppState.account)
 
   function closedFilterFunction(bug) {
       if (closedFilter.value) {
@@ -74,10 +76,12 @@ setup(){
 
   onMounted( async () => {
      await bugsService.getTrackedBugByAccount()
+     logger.log(AppState.trackedBugs)
     })
     
   return{
     account: computed(() => AppState.account),
+    trackedBugs: computed(()=> AppState.trackedBugs),
     ascending,
     closedFilter,
     bugs: computed(() => AppState.trackedBugs.filter(closedFilterFunction).sort(prioritySorter)),

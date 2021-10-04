@@ -1,19 +1,36 @@
 <template>
   <div class="card">
-    <div class="row">
-      <div class="col-1 offset-10" v-if="account.id == bug.creatorId">
+    <div class="row" v-if="account.id == bug.creatorId">
+      <div class="col-1 offset-8">
         <button class="btn create-button text-black pb-3" data-bs-toggle="modal" data-bs-target="#update-bug">
-            <i class="mdi mdi-pencil f-10 selectable"></i>
+            <i class="mdi mdi-pencil f-10 selectable" title="edit bug"></i>
             </button>
-      </div>
+            </div>
+           
+             <div class="col-2 mt-2" >
+              <div class="form-check form-switch" v-if="bug.closed === true">
+            <input class="form-check-input" type="checkbox" id="closed">
+            <label class="form-check-label" for="closed">
+              <p>Closed</p>
+            </label>
+            </div>
+
+             <div class="form-check form-switch" v-else>
+            <input class="form-check-input" type="checkbox" id="closed" @click="closeBug(bug.id)">
+            <label class="form-check-label" for="closed">
+              <p>Open</p>
+            </label>
+            </div>
+           </div>
+
     </div>
     <div class="card-header row justify-content-between">
       <div class="col-2" v-if="bug">
-        <!-- <img :src="bug.creator.picture" height="64" class="rounded-circle" alt=""> -->
+        <img :src="bug.creator?.picture" height="64" class="rounded-circle" alt="">
       </div>
       <div class="col-3">
         <small class="text-secondary m-0 p-0">Reported By</small>
-         <!-- <p>{{bug.creator.name}}</p> -->
+         <p>{{bug.creator?.name}}</p>
       </div>
       <div class="col-2">
          <small class="text-secondary m-0 p-0">Priority</small>
@@ -24,7 +41,7 @@
         <p>{{new Date(bug.updatedAt).toLocaleDateString()}}</p>
       </div>
       <div class="col-3">
-         <div class="col-2" v-if="bug.closed === true">
+         <div class="col-3" v-if="bug.closed === true">
            <small class="text-secondary m-0 p-0">Status</small>
            <p>Closed <i class="mdi mdi-radiobox-marked f-20 text-green"></i></p>
           </div>
@@ -40,23 +57,25 @@
     </div>
 
     <div class="card-footer row">
-      <div class="col-8">
+      <div class="col-6">
       <p>{{bug.description}}</p>
       </div>
       
-      <!-- <div class="col-2">
+      <div class="col-3">
            <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="closed">
+            <input class="form-check-input" type="checkbox" id="closed" @click="trackBug">
             <label class="form-check-label" for="closed">
-            <p v-if="tracked"><i class="mdi mdi-bug"></i> Don't Track Bug</p>
+            <p v-if="trackedBug"><i class="mdi mdi-bug"></i> Don't Track Bug</p>
             <p v-else><i class="mdi mdi-bug"></i> Track Bug</p>
             </label>
             </div>
-      </div>  -->
+      </div> 
 
-      <!-- <div class="col-2" v-if="b in trackedBug" :key="b.id" :trackedBug="b">
-        <img :src="trackedBug.creator.picture" height="30px" class="rounded-circle" alt="">
-      </div> -->
+       <div class="col-3" v-for="t in trackedBug" :key="t.id" :trackedBug="t">
+        <img :src="trackedBug.tracker?.picture" height="30px" class="rounded-circle" alt="">
+        <p>{{trackedBug.tracker?.name}}</p>
+        {{trackedBug}}
+      </div>
     </div>
   </div>
 
@@ -71,18 +90,30 @@
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core'
+import { computed, reactive } from '@vue/runtime-core'
 import { Bug } from '../model/Bug'
 import { AppState } from '../AppState'
+import { bugsService } from '../services/BugsService'
+import { useRoute } from 'vue-router'
 export default {
-  
-setup(){
+  setup(){
+    const route = useRoute()
 return{
+  trackedBug: computed(()=> AppState.trackedBugs),
+  bugs: computed(()=> AppState.bugs),
   bug: computed(()=> AppState.bug),
-  account: computed((()=> AppState.account))
+  account: computed((()=> AppState.account)),
+  async trackBug(){
+    await bugsService.trackBug(route.params.id)
+  },
+  async deleteTrackedBug(){
+    await bugsService.deleteTrackedBug(route.params.id)
+  },
+  async closeBug(bugId){
+      await bugsService.closeBug(bugId)
+  }
 }
 }
-
 }
 </script>
 

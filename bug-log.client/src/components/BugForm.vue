@@ -1,5 +1,5 @@
 <template>
- <form @submit.prevent="reportBug(bug.id)">
+ <form @submit.prevent="reportBug()">
   
     <div class="form-group">
       <label for="title" class="sr-only"></label>
@@ -54,26 +54,22 @@ import { AppState } from '../AppState'
 import { router } from '../router'
 
  export default {
-   props: {
-     bug: {
-       type: Bug, default: () => new Bug() 
-     }
-   },
-    setup(props) {
+    setup() {
       const editable = ref({})
       watchEffect(() => {
-        editable.value = {...props.bug}
+        editable.value = {}
       })
       return {
         editable,
+        bug: computed(()=> AppState.bugs),
         async reportBug(bugId){
           try {
            console.log('report bug bugId', bugId)
             if(editable.value.id){
               await bugsService.editBug(editable.value)
             } else {
-            await bugsService.reportBug(editable.value)
-            router.push({ name: 'BugDetail', params: { id: bugId }})
+            const newBug = await bugsService.reportBug(editable.value)
+            router.push({ name: 'BugDetail', params: { id: newBug }})
             editable.value = {}
             }
           }

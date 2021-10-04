@@ -22,14 +22,21 @@ import { bugsService } from '../services/BugsService'
 import { useRoute } from 'vue-router'
 import { notesService } from '../services/NotesService'
 import { logger } from '../utils/Logger'
+import { Bug } from '../model/Bug'
 
 export default {
-setup(){
+  props: {
+   bug: {
+     type: Bug, default: () => new Bug() 
+   }
+  },
+setup(props){
   const route = useRoute()
   onMounted(async () => {
       try {
        await bugsService.getBugById(route.params.id)
        await notesService.getNotes(route.params.id)
+       await bugsService.getTrackedBugsByBugId(route.params.id)
       } catch (error) {
         Pop.toast(error.message, 'error')
       }

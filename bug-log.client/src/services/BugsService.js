@@ -16,15 +16,21 @@ class BugsService{
   async reportBug(bug){
     const res = await api.post('api/bugs', bug)
     AppState.bugs.push(new Bug(res.data))
+    return res.data.id
   }
   async closeBug(bugId){
     const res = await api.delete(`api/bugs/${bugId}`)
     AppState.bugs = AppState.bugs.filter(b => b.id !== bugId)
+    AppState.bugs = res.data
   }
 
   async editBug(bug) {
-    const res = await api.put(`api/bugs/${bug.id}`, bug)
-    AppState.bugs = new Bug(res.data)
+    if(AppState.bugs.closed === false){
+      const res = await api.put(`api/bugs/${bug.id}`, bug)
+      AppState.bugs = new Bug(res.data)
+    } else {
+      throw new Error('You cannot edit bug if it is closed')
+    }
   }
 
   async getTrackedBugsByBugId(bugId){
@@ -32,13 +38,23 @@ class BugsService{
     AppState.trackedBugs = res.data
   }
 
-  async trackBug(trackedBug){
+  async trackBug(bugId){
+    const trackedBug = {}
+    trackedBug.bugId = bugId
     const res = await api.post('api/trackedbugs', trackedBug)
     AppState.trackedBugs.push(res.data)
   }
 
-  async getTrackedBugByAccount(){
-    const res = await api.get('account/trackedbugs')
+  async deleteTrackedBug(bugId) {
+  const trackedBug = {}
+  trackedBug.bugId = bugId
+  const res = await api.delete('api/trackedbugs/:trackedBugId', trackedBug)
+  AppState.trackedBugs = AppState.trackedBugs.filter(b => b.id !== bugId)
+  }
+
+  async getTrackedBugByAccount(query = ''){
+    logger.log('tracked bugs', AppState.trackedBugs)
+    const res = await api.get('account/trackedbugs' + query)
     AppState.trackBugs = res.data
   }
   async deleteTrackedBug(trackedBugId){
