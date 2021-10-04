@@ -20,8 +20,9 @@ class BugsService{
   }
   async closeBug(bugId){
     const res = await api.delete(`api/bugs/${bugId}`)
-    AppState.bugs = AppState.bugs.filter(b => b.id !== bugId)
-    AppState.bugs = res.data
+    logger.log('closed res', res)
+    AppState.bug = new Bug(res.data)
+    
   }
 
   async editBug(bug) {
@@ -39,15 +40,11 @@ class BugsService{
   }
 
   async trackBug(bugId){
-    if(AppState.trackedBugs.tracked){
-      return
-    } else {
     const trackedBug = {}
     trackedBug.bugId = bugId
     const res = await api.post('api/trackedbugs', trackedBug)
     AppState.trackedBugs.push(res.data)
   }
-}
 
   async deleteTrackedBug(bugId) {
   const trackedBug = {}

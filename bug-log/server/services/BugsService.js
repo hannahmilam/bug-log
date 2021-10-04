@@ -42,8 +42,8 @@ class BugsService{
     if(userId !== bug.creatorId.toString()) {
       throw new Forbidden('Not Authorized')
     }
-    
-    await bug.update({closed: true})
+    bug.closed = true
+    await bug.save()
     return bug
   }
 

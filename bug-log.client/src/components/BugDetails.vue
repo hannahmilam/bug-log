@@ -65,19 +65,19 @@
            <div class="form-check form-switch">
             <input class="form-check-input" type="checkbox" id="closed" @click="trackBug">
             <label class="form-check-label" for="closed">
-            <p v-if="trackedBug.tracked"><i class="mdi mdi-bug"></i> Don't Track Bug</p>
-            <p v-else><i class="mdi mdi-bug"></i> Track Bug</p>
+              <!-- TODO add v-if statement so that track bug only shows if you are not already tracking it -->
+            <p><i class="mdi mdi-bug"></i> Track Bug</p>
+            <!-- <p><i class="mdi mdi-bug"></i> Don't Track Bug</p> -->
             </label>
             </div>
       </div> 
 
-      <!-- NOT WORKING... NEED TO FIXME -->
-       <!-- <div class="col-3">
-        <img :src="trackedBug.tracker?.picture" height="30px" class="rounded-circle" alt="">
-        <p>{{trackedBug.tracker?.name}}</p>
-      </div>-->
+       <div class="col-3" v-for="t in trackedBug" :key="t.id" :trackedBug="t">
+        <img :src="t.tracker?.picture" height="30" class="rounded-circle" alt="">
+        <p>{{t.tracker?.name}}</p>
+      </div>
+      </div>
     </div>
-  </div> 
 
   <Modal id="update-bug">
     <template #modal-title>
@@ -90,27 +90,42 @@
 </template>
 
 <script>
-import { computed, reactive } from '@vue/runtime-core'
+import { computed, onMounted, reactive, ref } from '@vue/runtime-core'
 import { Bug } from '../model/Bug'
 import { AppState } from '../AppState'
 import { bugsService } from '../services/BugsService'
 import { useRoute } from 'vue-router'
+import Pop from '../utils/Pop'
 export default {
   setup(){
+    const myTrackedBug = ref(false)
     const route = useRoute()
 return{
+  myTrackedBug,
   trackedBug: computed(()=> AppState.trackedBugs),
+  account: computed(() => AppState.account),
+  myTrackedBug: computed(()=> AppState.trackedBugs.filter(t => t.accountId === account.id)),
   bugs: computed(()=> AppState.bugs),
   bug: computed(()=> AppState.bug),
-  account: computed((()=> AppState.account)),
+
   async trackBug(){
-    await bugsService.trackBug(route.params.id)
-  },
-  async deleteTrackedBug(){
-    await bugsService.deleteTrackedBug(route.params.id)
+    try {
+      if(this.myTrackedBug){
+        debugger
+        await bugsService.deleteTrackedBug(this.myTrackedBug.id)
+      } else {
+      await bugsService.trackBug(route.params.id)
+      }
+    } catch (error) {
+      Pop.toast(error.message, 'error')
+    }
   },
   async closeBug(bugId){
+    try {
       await bugsService.closeBug(bugId)
+    } catch (error) {
+      Pop.toast(error.message, 'error')
+    }
   }
 }
 }
