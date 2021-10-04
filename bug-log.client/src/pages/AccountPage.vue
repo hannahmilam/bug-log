@@ -4,19 +4,19 @@
      <div class="col-10">
        <div class="card p-3">
          <div class="card-header row mt-2 justify-content-between">
-          <div class="col-2">
+          <div class="col-md-2">
             <h4> Title </h4>
           </div>
 
-          <div class="col-2">
+          <div class="col-md-2">
             <h4> Priority </h4>
           </div>
 
-          <div class="col-2">
+          <div class="col-md-2">
             <h4> Updated</h4>
           </div>
 
-          <div class="col-2">
+          <div class="col-md-2">
             <h4>Status</h4>
           </div>
         </div>

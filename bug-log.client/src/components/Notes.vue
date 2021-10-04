@@ -6,12 +6,12 @@
   </p>
 </div>
 <div class="row notes pt-3">
-  <div class="col-11">
+  <div class="col-md-11">
 <p>
   {{note.body}}
 </p>
   </div>
-  <div class="col-1" v-if="account.id == note.creatorId">
+  <div class="col-md-1" v-if="account.id == note.creatorId">
     <i class="mdi mdi-delete selectable" @click="deleteNote()"></i>
   </div>
 </div>

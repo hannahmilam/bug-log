@@ -1,13 +1,13 @@
 <template>
   <div class="container-fluid">
     <div class="row my-4 justify-content-center">
-      <div class="col-10">
+      <div class="col-md-10">
         <BugDetails />
       </div>
     </div>
 
      <div class="row justify-content-center my-4 mx-2">
-       <div class="col-6">
+       <div class="col-md-6">
     <NoteForm />
        </div>
   </div>

@@ -1,35 +1,35 @@
 <template>
  <div class="container-fluid">
    <div class="row my-3">
-     <div class="col-2 offset-10">
+     <div class="col-md-2 offset-md-10" v-if="account.id">
       <button class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#report-bug-modal">
         Report Bug
         </button>
      </div>
    </div>
    <div class="row justify-content-center mt-4">
-     <div class="col-10">
+     <div class="col-md-11">
        <div class="card p-3">
          <div class="card-header row mt-2 justify-content-between">
-          <div class="col-2">
+          <div class="col-md-2">
             <h4> Title </h4>
           </div>
 
-          <div class="col-2">
+          <div class="col-md-2">
             <h4> Priority </h4>
             <button class="btn selectable me-2 text-white" @click="toggleAscending">
             <i class="mdi" :class="ascending ? 'mdi-arrow-up' : 'mdi-arrow-down'"></i>
             </button> 
           </div>
 
-          <div class="col-2">
+          <div class="col-md-2">
              <h4> Reported By </h4>
           </div>
-          <div class="col-2">
+          <div class="col-md-2">
             <h4> Last Updated </h4>
           </div>
 
-          <div class="col-2">
+          <div class="col-md-2">
             <h4>Status</h4>
             <div class="form-check form-switch" @click="closedFilter = !closedFilter">
             <input class="form-check-input" type="checkbox" id="closed">
