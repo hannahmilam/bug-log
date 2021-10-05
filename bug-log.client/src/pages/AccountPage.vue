@@ -57,7 +57,7 @@ img {
 }
 
 .card{
-  color: white;
+  color: black;
   box-shadow: 0px 0px 6px #d1ecf3c4;
   background: rgba(81, 119, 119, 0.137);
   backdrop-filter: blur(10px);
