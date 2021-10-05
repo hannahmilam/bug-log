@@ -57,10 +57,10 @@ img {
 }
 
 .card{
-  background-image: linear-gradient(90deg, #ffefba48, #ffffff4b);
   color: black;
-  box-shadow: 0px 0px 6px #e0dfd7c4;
-  backdrop-filter: blur(4px);
+  box-shadow: 0px 0px 6px #7ecde0c4;
+  background: rgba(255, 255, 255, 0.541);
+  backdrop-filter: blur(10px);
 }
 .btn-purple{
         background: linear-gradient(180deg, #e347ff, #7b41e0);

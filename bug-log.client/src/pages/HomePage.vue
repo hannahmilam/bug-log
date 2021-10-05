@@ -1,5 +1,5 @@
 <template>
- <div class="container-fluid">
+ <div class="container-fluid bg-">
    <div class="row my-3">
      <div class="col-md-2 offset-md-10" v-if="account.id">
       <button class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#report-bug-modal">
@@ -101,11 +101,12 @@ setup(){
 
 <style scoped lang="scss">
 
-.custom-bg{
-  background-image: linear-gradient(90deg, #ffefba48, #ffffff4b);
+.card{
+  // background-image: linear-gradient(90deg, #ffefbae1, #ffffffe5);
   color: black;
-  box-shadow: 0px 0px 6px #e0dfd7c4;
-  backdrop-filter: blur(20px);
+  box-shadow: 0px 0px 6px #7ecde0c4;
+  background: rgba(255, 255, 255, 0.541);
+  backdrop-filter: blur(10px);
 }
 
 .btn-purple{
