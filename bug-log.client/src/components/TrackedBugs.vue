@@ -1,9 +1,9 @@
 <template>
     <div class="container-fluid" v-if="bug">
-      <router-link :to="{ name: 'BugDetail', params: {id: bug.id} }" class="text-white selectable">
-       <div class="row card-body mt-2 justify-content-between bg-primary" v-if="bug.priority === 5">
+      <router-link :to="{ name: 'BugDetail', params: {id: bug.id} }" class="text-black selectable">
+       <div class="row card-body mt-2 justify-content-between bg-priority" v-if="bug.priority === 5">
           <div class="col-md-2">
-            <h5> {{bug.title}} </h5>
+            <h5>{{bug.title}} </h5>
           </div>
           <div class="col-md-2">
             <h5> {{bug.priority}} </h5>
@@ -67,5 +67,8 @@ return{
 }
 .text-green{
   color: green;
+}
+.bg-priority{
+  background: rgba(255, 0, 0, 0.384);
 }
 </style>

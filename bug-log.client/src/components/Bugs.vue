@@ -1,6 +1,6 @@
 <template>
-      <router-link :to="{ name: 'BugDetail', params: {id: bug.id} }" class="text-white selectable">
-       <div class="row card-body mt-2 justify-content-between bg-primary" v-if="bug.priority === 5">
+      <router-link :to="{ name: 'BugDetail', params: {id: bug.id} }" class=" text-black selectable">
+       <div class="row card-body mt-2 justify-content-between bg-priority" v-if="bug.priority === 5">
           <div class="col-md-2">
             <h5> {{bug.title}} </h5>
           </div>
@@ -63,11 +63,17 @@ return{
 }
 </script>
 
-<style>
+<style scoped lang='scss'>
 .text-red{
   color: red;
 }
 .text-green{
   color: green;
+}
+.card-body{
+  box-shadow: 0 4px 2px -2px rgba(128, 128, 128, 0.438);
+}
+.bg-priority{
+  background: rgba(255, 0, 0, 0.384);
 }
 </style>

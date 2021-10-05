@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar custom-nav navbar-expand-lg navbar-dark bg-dark px-3">
+  <nav class="navbar custom-nav navbar-expand-lg bg-white text-black px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
         <img
@@ -8,13 +8,13 @@
           height="45"
         />
       </div>
-      <div class="mt-2">
+      <div class="mt-2 text-black">
         <h4>BUG LOG</h4>
         </div>
     </router-link>
   
       <router-link :to="{name:'Account'}">
-          <li class="nav-link text-white">
+          <li class="nav-link text-black">
             My Tracked Bugs
           </li>
         </router-link>
@@ -57,7 +57,7 @@
               height="40"
               class="rounded"
             />
-            <span class="mx-3 text-white">{{ user.name }}</span>
+            <span class="mx-3 text-black">{{ user.name }}</span>
           </div>
           <div
             class="dropdown-menu p-0 list-group w-100"
@@ -125,7 +125,5 @@ a:hover {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
-.custom-nav{
-    background: linear-gradient(35deg, #000000, #0ae4fe);
-}
+
 </style>

@@ -9,28 +9,28 @@
    </div>
    <div class="row justify-content-center mt-4">
      <div class="col-md-11">
-       <div class="card p-3">
+       <div class="card custom-bg p-3">
          <div class="card-header row mt-2 justify-content-between">
           <div class="col-md-2">
-            <h4> Title </h4>
+            <h4> <b>Title </b></h4>
           </div>
 
           <div class="col-md-2">
-            <h4> Priority </h4>
-            <button class="btn selectable me-2 text-white" @click="toggleAscending">
+            <h4> <b>Priority </b> </h4>
+            <button class="btn selectable me-2" @click="toggleAscending">
             <i class="mdi" :class="ascending ? 'mdi-arrow-up' : 'mdi-arrow-down'"></i>
             </button> 
           </div>
 
           <div class="col-md-2">
-             <h4> Reported By </h4>
+             <h4><b> Reported By </b> </h4>
           </div>
           <div class="col-md-2">
-            <h4> Last Updated </h4>
+            <h4> <b>Last Updated </b></h4>
           </div>
 
           <div class="col-md-2">
-            <h4>Status</h4>
+            <h4><b>Status</b></h4>
             <div class="form-check form-switch" @click="closedFilter = !closedFilter">
             <input class="form-check-input" type="checkbox" id="closed">
             <label class="form-check-label" for="closed">
@@ -101,11 +101,11 @@ setup(){
 
 <style scoped lang="scss">
 
-.card{
-  background-color: rgba(39, 38, 48, 0.5);
-  color: white;
+.custom-bg{
+  background-image: linear-gradient(90deg, #ffefba48, #ffffff4b);
+  color: black;
   box-shadow: 0px 0px 6px #e0dfd7c4;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(20px);
 }
 
 .btn-purple{

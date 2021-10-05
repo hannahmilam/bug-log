@@ -5,19 +5,19 @@
        <div class="card p-3">
          <div class="card-header row mt-2 justify-content-between">
           <div class="col-md-2">
-            <h4> Title </h4>
+            <h4> <b>Title </b></h4>
           </div>
 
           <div class="col-md-2">
-            <h4> Priority </h4>
+            <h4><b> Priority </b></h4>
           </div>
 
           <div class="col-md-2">
-            <h4> Updated</h4>
+            <h4><b> Updated</b></h4>
           </div>
 
           <div class="col-md-2">
-            <h4>Status</h4>
+            <h4><b>Status</b></h4>
           </div>
         </div>
         
@@ -57,12 +57,11 @@ img {
 }
 
 .card{
-  background-color: rgba(39, 38, 48, 0.5);
-  color: white;
+  background-image: linear-gradient(90deg, #ffefba48, #ffffff4b);
+  color: black;
   box-shadow: 0px 0px 6px #e0dfd7c4;
   backdrop-filter: blur(4px);
 }
-
 .btn-purple{
         background: linear-gradient(180deg, #e347ff, #7b41e0);
         filter: drop-shadow(0 15px 15px #00a1ff57);

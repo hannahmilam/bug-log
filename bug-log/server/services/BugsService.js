@@ -74,7 +74,6 @@ class BugsService{
     return bug
   }
  
-  // STILL WORKING ON THIS ADD TRACKED BUG TO PASS THE FINAL POSTMAN REQUIREMENT...
   async addTrackedBug(userId, bugData) {
     let users = await this.getUsersbyTrackingBugId(bugData.bugId)
     if (users.filter(u => u.accountId === userId).length > 0) {

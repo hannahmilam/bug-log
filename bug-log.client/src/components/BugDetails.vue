@@ -24,29 +24,29 @@
            </div>
 
     </div>
-    <div class="card-header row justify-content-between">
+    <div class="card-header mx-0 px-0 row justify-content-between">
       <div class="col-md-2" v-if="bug">
         <img :src="bug.creator?.picture" height="64" class="rounded-circle" alt="">
       </div>
       <div class="col-md-3">
-        <small class="text-secondary m-0 p-0">Reported By</small>
+        <small class="m-0 p-0">Reported By</small>
          <p>{{bug.creator?.name}}</p>
       </div>
       <div class="col-md-2">
-         <small class="text-secondary m-0 p-0">Priority</small>
+         <small class="m-0 p-0">Priority</small>
         <p>{{bug.priority}}</p>
       </div>
       <div class="col-md-2">
-        <small class="text-secondary m-0 p-0">Last Updated</small>
+        <small class="m-0 p-0">Last Updated</small>
         <p>{{new Date(bug.updatedAt).toLocaleDateString()}}</p>
       </div>
       <div class="col-md-3">
          <div class="col-3" v-if="bug.closed === true">
-           <small class="text-secondary m-0 p-0">Status</small>
+           <small class="m-0 p-0">Status</small>
            <p>Closed <i class="mdi mdi-radiobox-marked f-20 text-green"></i></p>
           </div>
           <div class="col-md-3" v-else>
-            <small class="text-secondary m-0 p-0">Status</small>
+            <small class="m-0 p-0">Status</small>
            <p>Open <i class="mdi mdi-radiobox-blank f-20 text-red"></i></p>
             </div>
       </div>
@@ -56,7 +56,7 @@
       <h3>{{bug.title}}</h3>
     </div>
 
-    <div class="card-footer row">
+    <div class="card-footer mx-0 px-0 row">
       <div class="col-6">
       <p>{{bug.description}}</p>
       </div>
@@ -70,8 +70,11 @@
             <!-- <p><i class="mdi mdi-bug"></i> Don't Track Bug</p> -->
             </label>
             </div>
-      </div> 
+      </div>
+      </div>
 
+      <div class="row p-3">
+        <p>All users tracking bugs: </p>
        <div class="col-3" v-for="t in trackedBug" :key="t.id" :trackedBug="t">
         <img :src="t.tracker?.picture" height="30" class="rounded-circle" alt="">
         <p>{{t.tracker?.name}}</p>
@@ -132,11 +135,17 @@ return{
 }
 </script>
 
-<style>
+<style scoped lang="scss">
 .text-red{
   color: red;
 }
 .text-green{
   color: green;
+}
+.card{
+  background-color: rgba(2, 2, 2, 0.5);
+  color: white;
+  box-shadow: 0px 0px 6px #e0dfd7c4;
+  backdrop-filter: blur(20px);
 }
 </style>

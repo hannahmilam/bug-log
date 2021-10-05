@@ -50,6 +50,7 @@ setup(props){
 
 <style scoped lang="scss">
 .notes{
-  background-color: rgba(143, 136, 136, 0.247);
+  background-color: rgba(2, 2, 2, 0.5);
+  backdrop-filter: blur(20px);
 }
 </style>
