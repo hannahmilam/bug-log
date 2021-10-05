@@ -1,6 +1,6 @@
 <template>
       <router-link :to="{ name: 'BugDetail', params: {id: bug.id} }" class=" text-black selectable">
-       <div class="row card-body mt-2 justify-content-between bg-priority" v-if="bug.priority === 5">
+       <div class="row text-white card-body mt-2 justify-content-between bg-priority" v-if="bug.priority === 5">
           <div class="col-md-2">
             <h5> {{bug.title}} </h5>
           </div>
@@ -14,14 +14,14 @@
             <h5> {{new Date(bug.updatedAt).toLocaleDateString()}}</h5>
           </div>
           <div class="col-md-2" v-if="bug.closed === true">
-            <i class="mdi mdi-radiobox-marked f-20 text-red"><span class="text-black"> Closed</span></i>
+            <i class="mdi mdi-radiobox-marked f-20 text-red"><span class="text-white"> Closed</span></i>
           </div>
           <div class="col-md-2" v-else>
-            <i class="mdi mdi-radiobox-blank f-20 text-green"><span class="text-black"> Open</span></i>
+            <i class="mdi mdi-radiobox-blank f-20 text-green"><span class="text-white"> Open</span></i>
             </div>
           </div>
 
-          <div class="row card-body mt-2 justify-content-between" v-else>
+          <div class="row card-body text-white mt-2 justify-content-between" v-else>
           <div class="col-md-2">
             <h5> {{bug.title}} </h5>
           </div>
@@ -35,10 +35,10 @@
             <h5> {{new Date(bug.updatedAt).toLocaleDateString()}}</h5>
           </div>
           <div class="col-md-2" v-if="bug.closed === true">
-            <i class="mdi mdi-radiobox-marked f-20 text-red"><span class="text-black"> Closed</span></i>
+            <i class="mdi mdi-radiobox-marked f-20 text-red"><span class="text-white"> Closed</span></i>
           </div>
           <div class="col-md-2" v-else>
-            <i class="mdi mdi-radiobox-blank f-20 text-green"><span class="text-black"> Open</span></i>
+            <i class="mdi mdi-radiobox-blank f-20 text-green"><span class="text-white"> Open</span></i>
             </div>
           </div>
           </router-link>

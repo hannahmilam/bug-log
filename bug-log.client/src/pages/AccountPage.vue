@@ -57,9 +57,9 @@ img {
 }
 
 .card{
-  color: black;
-  box-shadow: 0px 0px 6px #7ecde0c4;
-  background: rgba(255, 255, 255, 0.541);
+  color: white;
+  box-shadow: 0px 0px 6px #d1ecf3c4;
+  background: rgba(81, 119, 119, 0.137);
   backdrop-filter: blur(10px);
 }
 .btn-purple{
