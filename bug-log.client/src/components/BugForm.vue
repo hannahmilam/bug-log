@@ -1,6 +1,5 @@
 <template>
- <form @submit.prevent="reportBug()">
-  
+  <form @submit.prevent="reportBug()">
     <div class="form-group">
       <label for="title" class="sr-only"></label>
       <input type="text"
@@ -9,11 +8,11 @@
              id="title"
              placeholder="Title"
              v-model="editable.title"
-              required
-      > 
-      </div>
+             required
+      >
+    </div>
 
-         <div class="form-group">
+    <div class="form-group">
       <label for="description" class="sr-only"></label>
       <input type="text"
              class="form-control bg-light"
@@ -21,11 +20,11 @@
              id="description"
              placeholder="Please describe the bug..."
              v-model="editable.description"
-              required
-      > 
-      </div>
+             required
+      >
+    </div>
 
-         <div class="form-group">
+    <div class="form-group">
       <label for="priority" class="sr-only"></label>
       <input type="number"
              class="form-control bg-light"
@@ -33,15 +32,16 @@
              id="priority"
              placeholder="Priority Level 1-5"
              v-model="editable.priority"
-              required
-      > 
-      </div>
+             required
+      >
+    </div>
 
-      <div>
-      <button class="btn btn-primary mt-4" data-bs-dismiss="modal">Report Bug</button>
-      </div>
-
-      </form>
+    <div>
+      <button class="btn btn-primary mt-4" data-bs-dismiss="modal">
+        Report Bug
+      </button>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -53,35 +53,34 @@ import { Bug } from '../model/Bug'
 import { AppState } from '../AppState'
 import { router } from '../router'
 
- export default {
-    setup() {
-      const editable = ref({})
-      watchEffect(() => {
-        editable.value = {}
-      })
-      return {
-        editable,
-        bug: computed(()=> AppState.bugs),
-        async reportBug(bugId){
-          try {
-           console.log('report bug bugId', bugId)
-            if(editable.value.id){
-              await bugsService.editBug(editable.value)
-            } else {
+export default {
+  setup() {
+    const editable = ref({})
+    watchEffect(() => {
+      editable.value = {}
+    })
+    return {
+      editable,
+      bug: computed(() => AppState.bugs),
+      async reportBug(bugId) {
+        try {
+          console.log('report bug bugId', bugId)
+          if (editable.value.id) {
+            await bugsService.editBug(editable.value)
+          } else {
             const newBug = await bugsService.reportBug(editable.value)
-            router.push({ name: 'BugDetail', params: { id: newBug }})
+            router.push({ name: 'BugDetail', params: { id: newBug } })
             editable.value = {}
-            }
           }
-           catch (error) {
-            Pop.toast(error.message, 'error')
-            logger.log('report bug', error)
-          }
-          }  
+        } catch (error) {
+          Pop.toast(error.message, 'error')
+          logger.log('report bug', error)
         }
+      }
     }
   }
-  </script>
+}
+</script>
 <style>
 
 </style>

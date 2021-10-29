@@ -6,11 +6,11 @@
       </div>
     </div>
 
-     <div class="row justify-content-center my-4 mx-2">
-       <div class="col-md-6">
-    <NoteForm />
-       </div>
-  </div>
+    <div class="row justify-content-center my-4 mx-2">
+      <div class="col-md-6">
+        <NoteForm />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -26,26 +26,26 @@ import { Bug } from '../model/Bug'
 
 export default {
   props: {
-   bug: {
-     type: Bug, default: () => new Bug() 
-   }
+    bug: {
+      type: Bug, default: () => new Bug()
+    }
   },
-setup(props){
-  const route = useRoute()
-  onMounted(async () => {
+  setup(props) {
+    const route = useRoute()
+    onMounted(async() => {
       try {
-       await bugsService.getBugById(route.params.id)
-       await notesService.getNotes(route.params.id)
-       await bugsService.getTrackedBugsByBugId(route.params.id)
+        await bugsService.getBugById(route.params.id)
+        await notesService.getNotes(route.params.id)
+        await bugsService.getTrackedBugsByBugId(route.params.id)
       } catch (error) {
         Pop.toast(error.message, 'error')
       }
     })
-  return{
-    bugs: computed(()=> AppState.bugs),
+    return {
+      bugs: computed(() => AppState.bugs)
     // note: computed(() => AppState.notes)
+    }
   }
-}
 }
 </script>
 
@@ -64,4 +64,3 @@ setup(props){
         color: white;
 }
 </style>
-
